@@ -15,33 +15,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: '1.24'
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.24"
 
-    - name: Install dependencies
-      run: go mod tidy
+      - name: Install dependencies
+        run: go mod tidy
 
-    - name: Run tests
-      run: go test ./test
+      - name: Run tests
+        run: go test ./test
 
-    - name: Check Pull Request Description
-      if: github.event_name == 'pull_request'
-      run: |
-        if [[ -z "${{ github.event.pull_request.body }}" ]]; then
-          echo "Erro: O pull request deve ter uma descrição."
-          exit 1
-        fi
+      - name: Check Pull Request Description
+        if: github.event_name == 'pull_request'
+        run: |
+          if [[ -z "${{ github.event.pull_request.body }}" ]]; then
+            echo "Erro: O pull request deve ter uma descrição."
+            exit 1
+          fi
 
-    - name: Lint Code
-      run: go vet ./...
+      - name: Lint Code
+        run: go vet ./...
 
-    - name: Static Code Analysis
-      run: staticcheck ./...
+      - name: Static Code Analysis
+        run: go run golang.org/x/tools/cmd/staticcheck ./...
 
-    - name: Security Check
-      run: go run github.com/securego/gosec/cmd/gosec ./...
+      - name: Security Check
+        run: go run github.com/securego/gosec/cmd/gosec ./...
