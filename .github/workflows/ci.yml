@@ -1,47 +1,49 @@
-name: CI/CD
+name: CI
 
 on:
   push:
     branches:
-      - develop
-      - master
+      - main
   pull_request:
     branches:
-      - develop
-      - master
+      - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  ci:
+    name: "Run CI"
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["windows-latest", "ubuntu-latest", "macOS-latest"]
+        go: ["1.24.x"]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
 
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
         with:
-          go-version: "1.24"
+          go-version: ${{ matrix.go }}
 
       - name: Install dependencies
         run: go mod tidy
 
-      - name: Run tests
-        run: go test ./test
+      - name: Run Tests
+        run: go test ./...
 
-      - name: Check Pull Request Description
-        if: github.event_name == 'pull_request'
-        run: |
-          if [[ -z "${{ github.event.pull_request.body }}" ]]; then
-            echo "Erro: O pull request deve ter uma descrição."
-            exit 1
-          fi
-
-      - name: Lint Code
+      - name: Run Vet
         run: go vet ./...
-
-      - name: Static Code Analysis
-        run: go run golang.org/x/tools/cmd/staticcheck ./...
 
       - name: Security Check
         run: go run github.com/securego/gosec/cmd/gosec ./...
+
+      - name: Run Staticcheck
+        uses: dominikh/staticcheck-action@v1.2.0
+        with:
+          version: "2023.1.1"
+          install-go: false
+          cache-key: ${{ matrix.go }}
