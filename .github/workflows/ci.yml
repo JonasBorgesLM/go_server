@@ -58,18 +58,9 @@ jobs:
         with:
           version: v2.0.2
 
-      # Etapa 10: Configurar o Java
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: "17"
-          distribution: "temurin"
-
-      # Etapa 11: Executar o SonarCloud
+      # Etapa 10: Executar o SonarCloud
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@v1
+        uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_SCANNER_OPTS: "-Dsonar.java.jdkHome=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64"
-          INPUT_ARGS: "-X"
