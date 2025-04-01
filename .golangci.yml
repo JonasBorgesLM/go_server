@@ -2,8 +2,8 @@ linters:
   enable:
     - gofmt
     - govet
-    - golint
-    - deadcode
+    - revive
+    - gosimple
     - ineffassign
     - misspell
     - unused
@@ -13,3 +13,6 @@ run:
 
 issues:
   exclude-use-default: false
+
+output:
+  format: colored-line-number
