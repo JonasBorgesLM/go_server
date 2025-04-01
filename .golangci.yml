@@ -2,11 +2,11 @@ linters:
   enable:
     - gofmt
     - govet
-    - gosimple
+    - golint
+    - deadcode
     - ineffassign
     - misspell
     - unused
-    - typecheck
 
 run:
   deadline: 5m
