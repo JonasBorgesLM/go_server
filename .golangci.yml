@@ -1,0 +1,15 @@
+linters:
+  enable:
+    - gofmt
+    - govet
+    - gosimple
+    - ineffassign
+    - misspell
+    - unused
+    - typecheck
+
+run:
+  deadline: 5m
+
+issues:
+  exclude-use-default: false
