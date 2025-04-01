@@ -1,11 +1,13 @@
 linters:
   enable:
+    - errcheck
     - gofmt
-    - govet
-    - revive
     - gosimple
+    - govet
     - ineffassign
     - misspell
+    - revive
+    - staticcheck
     - unused
 
 run:
@@ -15,4 +17,5 @@ issues:
   exclude-use-default: false
 
 output:
-  format: colored-line-number
+  formats:
+    - colored-line-number
