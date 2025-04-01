@@ -2,5 +2,9 @@
     "conventionalCommits.scopes": [
         "setup",
         "docs"
-    ]
+    ],
+    "sonarlint.connectedMode.project": {
+        "connectionId": "jonasborgeslm",
+        "projectKey": "JonasBorgesLM_go-server"
+    }
 }

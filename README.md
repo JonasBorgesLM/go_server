@@ -13,7 +13,8 @@ Este projeto é um exemplo de servidor em Go seguindo as melhores práticas de C
 ### Instalação
 
 1. Clone o repositório:
-   ```bash
-   git clone https://github.com/JonasBorgesLM/go_server.git
-   cd go_server
-   ```
+
+```bash
+  git clone https://github.com/JonasBorgesLM/go_server.git
+  cd go_server
+```
