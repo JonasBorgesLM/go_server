@@ -1,8 +1,8 @@
+version: 2
+
 linters:
   enable:
     - errcheck
-    - gofmt
-    - gosimple
     - govet
     - ineffassign
     - misspell
@@ -18,4 +18,4 @@ issues:
 
 output:
   formats:
-    - colored-line-number
+    github-actions: true  # ou outro formato desejado

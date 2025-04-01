@@ -15,12 +15,11 @@ func TestMainOutput(t *testing.T) {
 
 	err := cmd.Run()
 	if err != nil {
-
-		t.Fatalf("Erro ao executar o comando: %v", err)
+		t.Fatalf("Error executing the command: %v", err)
 	}
 
 	expected := "Hello, World!\n"
 	if out.String() != expected {
-		t.Errorf("Saída inesperada: got %q, want %q", out.String(), expected)
+		t.Errorf("Unexpected output: got %q, want %q", out.String(), expected)
 	}
 }

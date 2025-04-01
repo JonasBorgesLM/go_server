@@ -1,3 +1,4 @@
+// Package main serves as the entry point for Go applications.
 package main
 
 import "fmt"
