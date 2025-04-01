@@ -72,3 +72,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_SCANNER_OPTS: "-Dsonar.java.jdkHome=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64"
+          INPUT_ARGS: "-X"
