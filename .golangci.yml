@@ -1,4 +1,4 @@
-version: 2
+version: "2"
 
 linters:
   enable:
@@ -10,12 +10,6 @@ linters:
     - staticcheck
     - unused
 
-run:
-  deadline: 5m
-
-issues:
-  exclude-use-default: false
-
 output:
   formats:
-    github-actions: true  # ou outro formato desejado
+    checkstyle: {}
