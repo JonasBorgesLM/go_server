@@ -12,30 +12,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Etapa 1: Fazer checkout do código
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Etapa 2: Configurar o Go
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: "1.24"
           cache: true
 
+      # Etapa 3: Verificar dependências
       - name: Verify dependencies
         run: go mod verify
 
+      # Etapa 4: Construir o projeto
       - name: Build
         run: go build -v ./...
 
+      # Etapa 5: Executar testes
       - name: Run Tests
         run: go test -v -race ./...
 
+      # Etapa 6: Gerar relatório de cobertura
       - name: Generate Coverage Report
         run: go test -coverprofile=coverage.out ./...
 
+      # Etapa 7: Executar vet
       - name: Run Vet
         run: go vet ./...
 
+      # Etapa 8: Verificar formatação
       - name: Check formatting
         run: |
           if [ -n "$(gofmt -l .)" ]; then
@@ -44,21 +52,23 @@ jobs:
             exit 1
           fi
 
+      # Etapa 9: Executar golangci-lint
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v7
         with:
           version: v2.0.2
 
+      # Etapa 10: Configurar o Java
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: "17"
           distribution: "temurin"
 
+      # Etapa 11: Executar o SonarCloud
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v1
-        with:
-          projectBaseDir: .
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_SCANNER_OPTS: "-Dsonar.java.jdkHome=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64"
