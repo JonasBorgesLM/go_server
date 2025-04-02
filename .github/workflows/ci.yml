@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: ["main", "develop", "release/**"]
 
+permissions:
+  pull-requests: read
+
 jobs:
   test:
     name: Test and Quality Check
@@ -60,7 +63,7 @@ jobs:
 
       # Etapa 10: Executar o SonarCloud
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2.2.0
+        uses: SonarSource/sonarcloud-github-action@4006f663ecaf1f8093e8e4abb9227f6041f52216
         with:
           projectBaseDir: .
         env:
