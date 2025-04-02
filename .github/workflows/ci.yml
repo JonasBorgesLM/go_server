@@ -15,53 +15,62 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Etapa 1: Fazer checkout do código
+      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Etapa 2: Configurar o Go
+      # Step 2: Set up Go
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: "1.24"
           cache: true
 
-      # Etapa 3: Verificar dependências
+      # Step 3: Cache Go modules
+      - name: Cache Go Modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      # Step 4: Verify dependencies
       - name: Verify dependencies
         run: go mod verify
 
-      # Etapa 4: Construir o projeto
+      # Step 5: Build the project
       - name: Build
         run: go build -v ./...
 
-      # Etapa 5: Executar testes
+      # Step 6: Run tests
       - name: Run Tests
-        run: go test -v -race ./...
+        run: go test -v -race -p 4 ./...
 
-      # Etapa 6: Gerar relatório de cobertura
+      # Step 7: Generate coverage report
       - name: Generate Coverage Report
         run: go test -coverprofile=coverage.out ./...
 
-      # Etapa 7: Executar vet
+      # Step 8: Run vet
       - name: Run Vet
         run: go vet ./...
 
-      # Etapa 8: Verificar formatação
+      # Step 9: Check formatting
       - name: Check formatting
         run: |
-          if [ -n "$(gofmt -l .)" ]; then
+          if [ -n "$(goimports -l .)" ]; then
             echo "These files are not formatted correctly:"
-            gofmt -l .
+            goimports -l .
             exit 1
           fi
 
-      # Etapa 9: Executar golangci-lint
+      # Step 10: Run golangci-lint
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v7
         with:
           version: v2.0.2
 
-      # Etapa 10: Executar o SonarCloud
+      # Step 11: Run SonarCloud scan
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@4006f663ecaf1f8093e8e4abb9227f6041f52216
         with:
