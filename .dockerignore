@@ -1,0 +1,11 @@
+.github
+.vscode
+
+.git
+.env.example
+.dockerignore
+.golangci.yml
+sonar-project.properties
+
+LICENSE
+README.md

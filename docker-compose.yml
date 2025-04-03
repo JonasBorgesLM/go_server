@@ -1,0 +1,47 @@
+services:
+  db-postgres:
+    image: postgres:13
+    container_name: db-postgres
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./postgres_data:/var/lib/postgresql/data"
+    networks:
+      - go-server-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  go-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: go-server
+    tty: true
+    # restart: unless-stopped
+    env_file:
+      - ./.env
+    networks:
+      - go-server-network
+    depends_on:
+      db-postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
+
+networks:
+  go-server-network:
+    driver: bridge
