@@ -1,0 +1,53 @@
+@hostname = http://localhost
+@port = 8080
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+
+### 1. Login (Authentication) - Success
+POST {{host}}/login HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "email": "jonas_11@exemplo.com",
+    "password": "StrongPass123!*"
+}
+
+### 2. Login (Authentication) - Invalid Email
+POST {{host}}/login HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "email": "invalid_email",
+    "password": "senha123"
+}
+
+### 3. Login (Authentication) - Missing Password
+POST {{host}}/login HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "email": "jonas@email.com",
+    "password": ""
+}
+
+### 4. Login (Authentication) - Invalid Credentials
+POST {{host}}/login HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "email": "jonas@email.com",
+    "password": "wrong_password"
+}
+
+### 5. Login (Authentication) - Invalid Request Body
+POST {{host}}/login HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "email": "jonas@email.com",
+    "password": 12345
+}
+
+### 6. Login (Authentication) - Invalid HTTP Method
+GET {{host}}/login HTTP/1.1
+Content-Type: {{contentType}}

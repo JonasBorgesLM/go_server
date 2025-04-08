@@ -1,0 +1,18 @@
+// Package utils provides cryptographic utility functions for securely hashing and comparing passwords using bcrypt.
+package utils
+
+import (
+	"golang.org/x/crypto/bcrypt"
+)
+
+// HashPassword hashes a plaintext password using bcrypt with the default cost.
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(bytes), err
+}
+
+// ComparePasswords compares a hashed password with a plaintext password and returns true if they match.
+func ComparePasswords(hashedPassword, password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+	return err == nil
+}
