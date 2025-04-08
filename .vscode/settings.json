@@ -1,7 +1,8 @@
 {
     "conventionalCommits.scopes": [
         "setup",
-        "docs"
+        "docs",
+        "resource"
     ],
     "sonarlint.connectedMode.project": {
         "connectionId": "jonasborgeslm",
