@@ -13,3 +13,4 @@ linters:
 output:
   formats:
     checkstyle: {}
+  

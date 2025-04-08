@@ -1,0 +1,90 @@
+@hostname = http://localhost
+@port = 8080
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDQyMzk0NjYsInVzZXJfaWQiOiJlY2ZkMzNkMy1jZWM0LTRhOWYtOWE4NS0yMDU5M2UwYTdiMmIifQ.Axh-tQkuY8_M_jNH5m8no0dIGouLpmdaaUfhUimVHio
+
+
+### 1. List All Users
+GET {{host}}/users HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+### 2. Create New User (Success)
+POST {{host}}/users/create HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+{
+    "email": "jonas_12@exemplo.com",
+    "username": "Jonas Borges",
+    "password": "StrongPass123!*"
+}
+
+### 3. Create New User (Error - Invalid Email)
+POST {{host}}/users/create HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+{
+    "email": "invalid_email",
+    "password": "senha123"
+}
+
+### 4. Create New User (Error - Weak Password)
+POST {{host}}/users/create HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+{
+    "email": "jonas_02@exemplo.com",
+    "password": "123"
+}
+
+### 5. Update User (Success)
+PUT {{host}}/users/update?id=01e9b731-4cf2-4806-bea5-70e3a0816333 HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+{
+    "email": "jonas_12@email.com",
+    "username": "Jonas Borges L"
+}
+
+### 6. Update User (Error - Missing ID)
+PUT {{host}}/users/update?id= HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+{
+    "email": "jonas@email.com"
+}
+
+### 7. Update User (Error - Invalid Email)
+PUT {{host}}/users/update?id=4a2f081c-debb-4d90-9185-de9c69f8932f HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+{
+    "email": "invalid_email"
+}
+
+### 8. Delete User (Success)
+DELETE {{host}}/users/delete?id=01e9b731-4cf2-4806-bea5-70e3a0816333 HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+### 9. Delete User (Error - Missing ID)
+DELETE {{host}}/users/delete?id= HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+### 10. Find User by Username (Success)
+GET {{host}}/users/username?username=Jonas Borges HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+### 11. Find User by Username (Error - Missing Username)
+GET {{host}}/users/username?username= HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
